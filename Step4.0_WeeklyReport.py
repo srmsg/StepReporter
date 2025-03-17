@@ -9,7 +9,7 @@ import traceback
 STEPUP_DAILY_REPORT_FILE = ''
 FINAL_REPORT_FILE = ''
 COMMITMENT_FILE = "commitment.csv"
-REPORT_COLUMN_NAMES = ['Name', 'Total Steps', 'Pending Steps', 'Consistency Score', 'Consistency Target Achieved']
+REPORT_COLUMN_NAMES = ['Name', 'Commitment', 'Total Steps', 'Pending Steps', 'Consistency Score', 'Consistency Target Achieved']
 reportdata = []
 CONSIST_MIN_AVG = {
     "60000": "8000",
@@ -77,9 +77,9 @@ for row in input_file:
                 commitment_achieved_count += 1
         if (commitment_achieved_count >= 5):
             commitment_achieved = "Y"
-        print(name + "," + total_steps.strip(';') + "," + str(pending_steps) + "," + str(
+        print(name + "," + str(my_commitment) + "," + total_steps.strip(';') + "," + str(pending_steps) + "," + str(
             commitment_achieved_count) + "," + commitment_achieved)
-        reportRow = [name, total_steps.strip(';'), str(pending_steps), str(commitment_achieved_count),
+        reportRow = [name, my_commitment, total_steps.strip(';'), str(pending_steps), str(commitment_achieved_count),
                      commitment_achieved]
         reportdata.append(reportRow)
     except Exception as e:
@@ -88,4 +88,7 @@ FINAL_REPORT_FILE = "report_" + time.strftime("%Y%m%d-%H%M%S") + ".csv"
 with open(FINAL_REPORT_FILE, 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerows(reportdata)
+print("***********************************************")
+print("***********************************************")
+print("***********************************************")
 print("Report written to file --" + FINAL_REPORT_FILE)
